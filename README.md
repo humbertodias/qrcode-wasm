@@ -1,6 +1,6 @@
 [![Deploy static content to Pages](https://github.com/humbertodias/qrcode-wasm/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/humbertodias/qrcode-wasm/actions/workflows/gh-pages.yml)
 
-<img width="434" alt="image" src="https://github.com/humbertodias/qrcode-wasm/assets/9255997/cf6d5ede-4ca8-4294-a88b-88d9db1d4006">
+<img width="434" alt="image" src="https://github.com/humbertodias/qrcode-wasm/assets/9255997/786661b2-113e-4601-b87f-39ce9c8c6179">
 
 [Play](https://humbertodias.github.io/qrcode-wasm)
 
@@ -14,6 +14,11 @@ go run cmd/server/main.go
 Access
 http://localhost:8080
 
+```shell
+ffmpeg -i input.mov -vf "fps=15,scale=900:-1:flags=lanczos" -c:v gif output.gif
+```
+
 ### Ref
 * [webassembly-using-go](https://golangbot.com/webassembly-using-go)
+
 -->
