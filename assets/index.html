@@ -2,6 +2,7 @@
 <html>  
     <head>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>QRCode Generator</title>
         <script src="wasm_exec.js"></script>
         <script>
@@ -9,18 +10,19 @@
             WebAssembly.instantiateStreaming(fetch("json.wasm"), go.importObject).then((result) => {
                 go.run(result.instance);
             });
-        function generateQrCode(text){
-            let b64 = qrCode64(text)
-            document.getElementById('qrcode').src = `data:image/png;base64,${b64}`
-        }
+            function generateQrCode(text){
+                let size = document.getElementById('size').value
+                let b64 = qrCode64(size, text)
+                document.getElementById('qrcode').src = `data:image/png;base64,${b64}`
+            }
 
-        function downloadImage(fileName) {
-            const linkSource = document.getElementById('qrcode').src;
-            const downloadLink = document.createElement("a");
-            downloadLink.href = linkSource;
-            downloadLink.download = fileName;
-            downloadLink.click();
-        }
+            function downloadImage(fileName) {
+                const linkSource = document.getElementById('qrcode').src;
+                const downloadLink = document.createElement("a");
+                downloadLink.href = linkSource;
+                downloadLink.download = fileName;
+                downloadLink.click();
+            }
         </script>
         <style>
             input,button {
@@ -37,11 +39,11 @@
         </style>
     </head>
     <body>
-
+        <h1 style="text-align: center;">QRCode Generator</h1>
         <input type="text" placeholder="Type a message" oninput="generateQrCode(this.value)"></input>
         <br>
         <img id="qrcode" class="center"></img>
+        <input type="number" id="size" placeholder="Size" min="256" max="1024" value="256" />
         <button onclick="downloadImage('qrcode.png')">Download</button>
-
     </body>
 </html>
