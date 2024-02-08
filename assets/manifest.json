@@ -1,6 +1,6 @@
 {
-    "name": "QRCode",
-    "short_name": "QRCode",
+    "name": "QRForge",
+    "short_name": "QRForge",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fff",
