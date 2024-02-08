@@ -1,7 +1,7 @@
-serve:
+serve:	wasm
 	go run cmd/server/main.go
 
-wasm:
+wasm:	wasm_exec
 	GOARCH=wasm GOOS=js go build -o assets/json.wasm cmd/wasm/main.go
 
 wasm_exec:

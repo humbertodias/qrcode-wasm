@@ -9,14 +9,15 @@
   </head>
   <body onload="setTimeout(()=>simulateUserInput('inputText', 'Type your message'), 1000)">
     <div class="container">
-      <form id="myForm" onsubmit="return false;">
-        <h1 style="text-align: center"><a href="https://github.com/humbertodias/qrcode-wasm" target="_blank" style="text-decoration: none;">QRCode</a></h1>
+      <form onsubmit="return false;">
+        <h1 style="text-align: center"><a href="https://github.com/humbertodias/qrforge" target="_blank" style="text-decoration: none;">QRCode</a></h1>
         <input
           type="text"
           id="inputText"
           placeholder="Enter text..."
-          oninput="generateQrCode(this.value)"
+          oninput="updateQrCode()"
         />
+
         <center>
           <img
             id="qrcode"
@@ -24,9 +25,19 @@
             alt="Placeholder Image"
           />
         </center>
+        <br>
+
+        <label for="bgColor">Background</label>
+        <input type="color" id="bgColor" name="bgColor" value="#ffffff" oninput="updateQrCode()">
+
+        <label for="fgColor">Foreground</label>
+        <input type="color" id="fgColor" name="fgColor" value="#000000" oninput="updateQrCode()">
+
+        <label for="size">Size</label>
         <input
           type="number"
           id="size"
+          name="size"
           placeholder="Enter a number..."
           placeholder="Size"
           min="32"
@@ -34,6 +45,19 @@
           value="400"
           oninput="updateQrCode()"
         />
+
+        <label for="level">Recovery Level</label>
+        <select name="level" id="level" oninput="updateQrCode()">
+          <option value="low">low</option>
+          <option value="medium">medium</option>
+          <option value="high">high</option>
+          <option value="highest">highest</option>
+        </select>
+
+        <label for="disableBorder">Disable Border</label>
+        <input type="checkbox" name="disableBorder" id="disableBorder" checked oninput="updateQrCode()">
+
+
         <button onclick="downloadImage('qrcode.png')">Download</button>
       </form>
     </div>

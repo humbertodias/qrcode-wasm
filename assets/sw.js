@@ -1,4 +1,4 @@
-CACHE_NAME = "qrcode-cache";
+CACHE_NAME = "qrforge-cache";
 URL_CACHE = ["/", "/index.html", "/styles.css", "/script.js"];
 
 self.addEventListener("install", (event) => {

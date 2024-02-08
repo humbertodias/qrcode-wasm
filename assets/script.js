@@ -1,21 +1,40 @@
 function updateQrCode() {
   let text = document.getElementById("inputText").value;
-  generateQrCode(text);
+  let size = document.getElementById("size").value;
+  let bgColor = document.getElementById("bgColor").value
+  let fgColor = document.getElementById("fgColor").value
+  let level = document.getElementById("level").value;
+  let disableBorder = document.getElementById("disableBorder").checked;
+  generateQrCode(text, size, bgColor, fgColor, level, disableBorder);
 }
 
-function generateQrCode(text) {
-  let size = document.getElementById("size").value;
-  let b64 = qrCode64(size, text);
+function generateQrCode(text, size, bgColor, fgColor, level, disableBorder) {
+  let b64 = qrCode64(text, size, bgColor, fgColor, level, disableBorder);
   document.getElementById("qrcode").src = `data:image/png;base64,${b64}`;
 }
 
 function downloadImage(fileName) {
   const linkSource = document.getElementById("qrcode").src;
   const downloadLink = document.createElement("a");
+  
+  // Encoding the file name to ensure proper handling on mobile devices
+  const encodedFileName = encodeURIComponent(fileName);
+  
   downloadLink.href = linkSource;
-  downloadLink.download = fileName;
-  downloadLink.click();
+  downloadLink.download = encodedFileName;
+  
+  // Append the link to the document body, so it's part of the DOM.
+  document.body.appendChild(downloadLink);
+  
+  // Trigger a click event on the link after a slight delay.
+  setTimeout(() => {
+      downloadLink.click();
+      
+      // Clean up by removing the link from the DOM after the click event.
+      document.body.removeChild(downloadLink);
+  }, 100);
 }
+
 function simulateUserInput(inputId, text, interval = 50) {
   let index = 0;
 
