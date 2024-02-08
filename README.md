@@ -1,5 +1,15 @@
-### Run Go programs in the browser using WebAssembly
+[![Deploy static content to Pages](https://github.com/humbertodias/qrcode-wasm/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/humbertodias/qrcode-wasm/actions/workflows/gh-pages.yml)
 
-This code has been tested on Go 1.21.6.
+# QR Code
+QR Code generator written in Go 1.21.6 and exported to WASM
 
-* https://golangbot.com/webassembly-using-go
+### Play
+```shell
+go run cmd/server/main.go
+```
+
+Access
+http://localhost:8080
+
+### Ref
+* [webassembly-using-go](https://golangbot.com/webassembly-using-go)
