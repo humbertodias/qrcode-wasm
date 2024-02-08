@@ -6,3 +6,6 @@ wasm:	wasm_exec
 
 wasm_exec:
 	cp "`go env GOROOT`/misc/wasm/wasm_exec.js" assets/
+
+clean:
+	rm -rf assets/json.wasm	assets/wasm_exec.js
