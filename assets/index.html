@@ -1,76 +1,98 @@
 <!doctype html>
-<html>  
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>QRCode Generator</title>
-        <script src="wasm_exec.js"></script>
-        <script>
-            const go = new Go();
-            WebAssembly.instantiateStreaming(fetch("json.wasm"), go.importObject).then((result) => {
-                go.run(result.instance);
-            });
-            function generateQrCode(text){
-                let size = document.getElementById('size').value
-                let b64 = qrCode64(size, text)
-                document.getElementById('qrcode').src = `data:image/png;base64,${b64}`
-            }
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QRCode Generator</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      WebAssembly.instantiateStreaming(
+        fetch("json.wasm"),
+        go.importObject
+      ).then((result) => {
+        go.run(result.instance);
+      });
+      function updateQrCode() {
+        let text = document.getElementById("inputText").value;
+        generateQrCode(text)
+      }
 
-            function downloadImage(fileName) {
-                const linkSource = document.getElementById('qrcode').src;
-                const downloadLink = document.createElement("a");
-                downloadLink.href = linkSource;
-                downloadLink.download = fileName;
-                downloadLink.click();
-            }
-            function simulateUserInput(inputId, text, interval=50) {
-                let index = 0;
+      function generateQrCode(text) {
+        let size = document.getElementById("size").value;
+        let b64 = qrCode64(size, text);
+        document.getElementById("qrcode").src = `data:image/png;base64,${b64}`;
+      }
 
-                let inputElement = document.getElementById(inputId)
+      function downloadImage(fileName) {
+        const linkSource = document.getElementById("qrcode").src;
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+      }
+      function simulateUserInput(inputId, text, interval = 50) {
+        let index = 0;
 
-                const inputInterval = setInterval(() => {
-                    // Check if the inputElement is valid
-                    if (!inputElement || !inputElement.tagName || inputElement.tagName.toLowerCase() !== 'input') {
-                        console.error('Invalid input element provided');
-                        clearInterval(inputInterval);
-                        return;
-                    }
+        let inputElement = document.getElementById(inputId);
 
-                    // Set the value of the input element with the next character
-                    inputElement.value += text[index++];
+        const inputInterval = setInterval(() => {
+          // Check if the inputElement is valid
+          if (
+            !inputElement ||
+            !inputElement.tagName ||
+            inputElement.tagName.toLowerCase() !== "input"
+          ) {
+            console.error("Invalid input element provided");
+            clearInterval(inputInterval);
+            return;
+          }
 
-                    // Trigger the 'input' event to simulate user input
-                    const event = new Event('input', { bubbles: true });
-                    inputElement.dispatchEvent(event);
+          // Set the value of the input element with the next character
+          inputElement.value += text[index++];
 
-                    // Stop when all characters have been typed
-                    if (index >= text.length) {
-                        clearInterval(inputInterval);
-                    }
-                }, interval);
-            }
-        </script>
-        <style>
-            input,button {
-                width: 100%;
-                padding: 12px 20px;
-                margin: 8px 0;
-                box-sizing: border-box;
-                text-align: center;
-            }
-            .center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            }
-        </style>
-    </head>
-    <body onload="simulateUserInput('inputText', 'Type your message here')">
-        <h1 style="text-align: center;">QRCode</h1>
-        <input id="inputText" type="text" placeholder="Type your message here" oninput="generateQrCode(this.value)"></input>
-        <br>
-        <img id="qrcode" class="center"></img>
-        <input type="number" id="size" placeholder="Size" min="256" max="1024" value="256" />
+          // Trigger the 'input' event to simulate user input
+          const event = new Event("input", { bubbles: true });
+          inputElement.dispatchEvent(event);
+
+          // Stop when all characters have been typed
+          if (index >= text.length) {
+            clearInterval(inputInterval);
+          }
+        }, interval);
+      }
+    </script>
+  </head>
+  <body onload="simulateUserInput('inputText', 'Type your message')">
+    <div class="container">
+      <form id="myForm">
+        <h1 style="text-align: center">QRCode</h1>
+        <input
+          type="text"
+          id="inputText"
+          placeholder="Enter text..."
+          oninput="generateQrCode(this.value)"
+        />
+        <center>
+          <img
+            id="qrcode"
+            src="https://via.placeholder.com/256"
+            alt="Placeholder Image"
+          />
+        </center>
+        <input
+          type="number"
+          id="size"
+          placeholder="Enter a number..."
+          placeholder="Size"
+          min="256"
+          max="1024"
+          value="256"
+          oninput="updateQrCode()"
+        />
         <button onclick="downloadImage('qrcode.png')">Download</button>
-    </body>
+      </form>
+    </div>
+  </body>
 </html>
