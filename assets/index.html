@@ -23,6 +23,32 @@
                 downloadLink.download = fileName;
                 downloadLink.click();
             }
+            function simulateUserInput(inputId, text, interval=50) {
+                let index = 0;
+
+                let inputElement = document.getElementById(inputId)
+
+                const inputInterval = setInterval(() => {
+                    // Check if the inputElement is valid
+                    if (!inputElement || !inputElement.tagName || inputElement.tagName.toLowerCase() !== 'input') {
+                        console.error('Invalid input element provided');
+                        clearInterval(inputInterval);
+                        return;
+                    }
+
+                    // Set the value of the input element with the next character
+                    inputElement.value += text[index++];
+
+                    // Trigger the 'input' event to simulate user input
+                    const event = new Event('input', { bubbles: true });
+                    inputElement.dispatchEvent(event);
+
+                    // Stop when all characters have been typed
+                    if (index >= text.length) {
+                        clearInterval(inputInterval);
+                    }
+                }, interval);
+            }
         </script>
         <style>
             input,button {
@@ -39,9 +65,9 @@
             }
         </style>
     </head>
-    <body>
-        <h1 style="text-align: center;">QRCode Generator</h1>
-        <input type="text" placeholder="Type a message" oninput="generateQrCode(this.value)"></input>
+    <body onload="simulateUserInput('inputText', 'Type your message here')">
+        <h1 style="text-align: center;">QRCode</h1>
+        <input id="inputText" type="text" placeholder="Type your message here" oninput="generateQrCode(this.value)"></input>
         <br>
         <img id="qrcode" class="center"></img>
         <input type="number" id="size" placeholder="Size" min="256" max="1024" value="256" />
