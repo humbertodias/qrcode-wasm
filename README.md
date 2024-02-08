@@ -14,6 +14,11 @@ go run cmd/server/main.go
 Access
 http://localhost:8080
 
+```shell
+ffmpeg -i input.mov -vf "fps=15,scale=900:-1:flags=lanczos" -c:v gif output.gif
+```
+
 ### Ref
 * [webassembly-using-go](https://golangbot.com/webassembly-using-go)
+
 -->
