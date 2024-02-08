@@ -67,7 +67,7 @@
   <body onload="simulateUserInput('inputText', 'Type your message')">
     <div class="container">
       <form id="myForm">
-        <h1 style="text-align: center">QRCode</h1>
+        <h1 style="text-align: center"><a href="https://github.com/humbertodias/qrcode-wasm" target="_blank" style="text-decoration: none;">QRCode</a></h1>
         <input
           type="text"
           id="inputText"
@@ -77,7 +77,7 @@
         <center>
           <img
             id="qrcode"
-            src="https://via.placeholder.com/256"
+            src="https://via.placeholder.com/400"
             alt="Placeholder Image"
           />
         </center>
@@ -86,9 +86,9 @@
           id="size"
           placeholder="Enter a number..."
           placeholder="Size"
-          min="256"
+          min="32"
           max="1024"
-          value="256"
+          value="400"
           oninput="updateQrCode()"
         />
         <button onclick="downloadImage('qrcode.png')">Download</button>
